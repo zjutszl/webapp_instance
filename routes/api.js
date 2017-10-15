@@ -13,9 +13,22 @@ router.get('/posts',function(req,res,next){
 
 /* POST editor message */
 router.post('/posts',function(req,res,next){
-  var title = req.body.title;
-  var content = req.body.content;
-  res.send({title,content});
+  let postPageSchema = mongoose.Schema({
+    title: String,
+    content:String
+  });
+  let postPage =mongoose.model('postPage',postPageSchema)
+  let newpost = new postPage({
+    title : req.body.title,
+    content : req.body.content
+  })
+  newpost.save(function (err, newpost) {
+    if (err) return console.error(err);
+  });
+  newpost.find(function(err,newposts){
+    if (err) return console.error(err);
+    res.send(newposts);
+  })
 })
 
 module.exports = router;

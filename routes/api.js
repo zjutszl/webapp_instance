@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var mongoose = require('mongoose');
 
 /* GET users listing. */
 router.get('/users', function(req, res, next) {
@@ -13,6 +14,7 @@ router.get('/posts',function(req,res,next){
 
 /* POST editor message */
 router.post('/posts',function(req,res,next){
+  mongoose.connect('mongodb://localhost/test');
   let postPageSchema = mongoose.Schema({
     title: String,
     content:String
